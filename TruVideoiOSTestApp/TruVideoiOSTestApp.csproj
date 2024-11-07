@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-ios</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+    <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
+    <MtouchExtraArgs>--require-pinvoke-wrappers=true</MtouchExtraArgs>
+    <Registrar>static</Registrar>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="TruVideoCoreiOSBinding" Version="0.0.1" />
+    <PackageReference Include="TruVideoCameraiOSBinding" Version="0.0.1" />
+    <PackageReference Include="TruVideoMediaiOSBinding" Version="0.0.1" />
+  </ItemGroup>
+</Project>
