@@ -126,22 +126,26 @@ namespace TruVideoiOSTestApp
                         }
 		            };
 
-		            TruvideoCamera.Shared.ShowCameraIn(this, ShowCameraHandler);
+                    TruvideoCameraSdk.Shared.ShowCameraIn(this, ShowCameraHandler);
                     break;
                 case 2:
                     if (selectedMedia.Count > 0) {
 					    textView.Text += "Uploading ....\n";
-				        Action<MediaResponse, NSError> UploadMediaHandler = (response, error) =>
-				        { 
-                            if (error != null) {
+                        Action<MediaResponse, NSError> UploadMediaHandler = (response, error) =>
+                        {
+                            if (error != null)
+                            {
                                 textView.Text += error.LocalizedDescription;
-                            } else {
-					            textView.Text += "Uploaded media url:\n";
-					            textView.Text += response.UploadedFileURL.AbsoluteString + "\n";
                             }
-				        };
-	    			    TruvideoMedia.Shared.UploadWithPath(selectedMedia[0], UploadMediaHandler);
-                    } else {
+                            else
+                            {
+                                textView.Text += "Uploaded media url:\n";
+                                textView.Text += response.UploadedFileURL.AbsoluteString + "\n";
+                            }
+                        };
+                        TruvideoMediaSdk.Shared.UploadWithPath(selectedMedia[0], UploadMediaHandler);
+                    }
+                    else {
 					    textView.Text += "No selected media from camera";
                     }
                     break;

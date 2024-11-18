@@ -77,7 +77,7 @@ namespace TruVideoiOSTestApp
                             }
                         });
                 };
-            TruvideoCore.Shared.IsAuthenticatedWithCompletionHandler(IsAuthenicatedHandler);
+            TruvideoCoreSdk.Shared.IsAuthenticatedWithCompletionHandler(IsAuthenicatedHandler);
         }
 
         private UITextField CreateTextField(string placeholder)
@@ -104,23 +104,23 @@ namespace TruVideoiOSTestApp
                         }
                         else
                         {
-                            Action<NSError> InitAuthHandler = (Error) =>
+                            Action<NSError> InitAuthHandler = (Error1) =>
                                 {
                                     InvokeOnMainThread(() =>
                                             {
                                                 activityIndicator.StopAnimating();
                                                 authenticateButton.Enabled = true;
-                                                TruvideoCore.Shared.IsAuthenticatedWithCompletionHandler(IsAuthenicatedHandler);
+                                                TruvideoCoreSdk.Shared.IsAuthenticatedWithCompletionHandler(IsAuthenicatedHandler);
                                             });
                                 };
-                            TruvideoCore.Shared.InitAuthenticationWithCompletionHandler(InitAuthHandler);
+                            TruvideoCoreSdk.Shared.InitAuthenticationWithCompletionHandler(InitAuthHandler);
                         }
                     });
             };
 
             activityIndicator.StartAnimating();
             authenticateButton.Enabled = false;
-            TruvideoCore.Shared.AuthenticateWithApiKey(apiKeyTextField.Text, secretTextField.Text, externalTextField.Text, AuthenticateHandler);
+            TruvideoCoreSdk.Shared.AuthenticateWithApiKey(apiKeyTextField.Text, secretTextField.Text, externalTextField.Text, AuthenticateHandler);
         }
     }
 }

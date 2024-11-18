@@ -1,26 +1,32 @@
-namespace TruVideoiOSTestApp;
-
+﻿using Foundation;
+using UIKit;
 using System;
-using System.Security.Cryptography;
-using System.Text;
 
-[Register ("AppDelegate")]
-public class AppDelegate : UIApplicationDelegate {
-	public override UIWindow? Window {
-		get;
-		set;
-	}
+namespace TruVideoiOSTestApp
+{
+    // The UIApplicationDelegate for the application. This class is responsible for launching the
+    // User Interface of the application, as well as listening (and optionally responding) to application events from iOS.
+    [Register ("AppDelegate")]
+    public class AppDelegate : UIResponder, IUIApplicationDelegate {
+    
+        [Export("window")]
+        public UIWindow Window { get; set; }
 
-	public override bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
-	{
-		Window = new UIWindow (UIScreen.MainScreen.Bounds);
+        [Export ("application:didFinishLaunchingWithOptions:")]
+        public bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
+        {
+            Window = new UIWindow(UIScreen.MainScreen.Bounds);
 
-		var vc = new MainViewController ();
-		var navigationVC  = new UINavigationController(vc);
-		Window.RootViewController = navigationVC;
+            var vc = new MainViewController();
+            var navigationVC = new UINavigationController(vc);
+            Window.RootViewController = navigationVC;
 
-		Window.MakeKeyAndVisible ();
+            Window.MakeKeyAndVisible();
 
-		return true;
-	}
+            return true;
+        }
+
+    }
 }
+
+
