@@ -80,10 +80,13 @@
         <Version>0.0.4</Version>
       </PackageReference>
       <PackageReference Include="TruVideoCameraiOSBinding">
-        <Version>0.0.5</Version>
+        <Version>0.0.6</Version>
       </PackageReference>
       <PackageReference Include="TruVideoMediaiOSBinding">
         <Version>0.0.6</Version>
+      </PackageReference>
+      <PackageReference Include="TruVideoVideoiOSBinding">
+        <Version>0.0.1</Version>
       </PackageReference>
     </ItemGroup>
     <ItemGroup>

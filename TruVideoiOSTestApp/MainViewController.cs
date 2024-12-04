@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 using TruvideoCameraiOS;
 using TruvideoMediaiOS;
+using TruvideoVideoiOS;
 
 namespace TruVideoiOSTestApp
 {
@@ -23,13 +24,14 @@ namespace TruVideoiOSTestApp
             base.ViewDidLoad();
             View.BackgroundColor = UIColor.White;
 
-            items = new List<string> { "Authenticate", "Show Camera", "Upload" };
+            items = new List<string> { "Authenticate", "Show Camera", "Generate Thumbnail", "Upload" };
 
             itemIcons = new Dictionary<int, UIImage>
             {
                 { 0, UIImage.GetSystemImage("lock") }, // Replace with your actual image names
                 { 1, UIImage.GetSystemImage("camera") },
-                { 2, UIImage.GetSystemImage("arrow.up.circle") }
+                { 2, UIImage.GetSystemImage("photo.circle") },
+                { 3, UIImage.GetSystemImage("arrow.up.circle") }
             };
 
             tableView = new UITableView
@@ -115,22 +117,49 @@ namespace TruVideoiOSTestApp
                     NavigationController?.PushViewController(new AuthenticateViewController(), true);
                     break;
                 case 1:
-		            Action<NSArray<NSString>> ShowCameraHandler = (paths) =>
-		            {
-			            if( paths.Count > 0) {
-				            textView.Text += "Selected media paths:\n";
+                    Action<NSArray<NSString>> ShowCameraHandler = (paths) =>
+                    {
+                        if (paths.Count > 0)
+                        {
+                            textView.Text += "Selected media paths:\n";
                             textView.Text += paths + "\n";
                             selectedMedia = paths;
-			            } else {
+                        }
+                        else
+                        {
                             textView.Text += "No selected Media\n";
                         }
-		            };
+                    };
 
                     TruvideoCameraSdk.Shared.ShowCameraIn(this, ShowCameraHandler);
                     break;
                 case 2:
-                    if (selectedMedia.Count > 0) {
-					    textView.Text += "Uploading ....\n";
+                    if (selectedMedia.Count > 0)
+                    {
+                        NSUrl url = NSUrl.FromString(selectedMedia[0]);
+                        ThumbnailRequest request = new ThumbnailRequest(url, 0.5, null, null);
+                        Action<NSUrl, NSError> ThumbnailHandler = (response, error) =>
+                        {
+                            InvokeOnMainThread(() =>
+                            {
+                                if (error != null)
+                                {
+                                    textView.Text += error.LocalizedDescription;
+                                }
+                                else
+                                {
+                                    textView.Text += "Generated thumbnail url:\n";
+                                    textView.Text += response + "\n";
+                                }
+                            });
+                        };
+                        TruvideoVideoSdk.Shared.GenerateThumbnailWithRequest(request, ThumbnailHandler);
+                    }
+                    break;
+                case 3:
+                    if (selectedMedia.Count > 0)
+                    {
+                        textView.Text += "Uploading ....\n";
                         Action<MediaResponse, NSError> UploadMediaHandler = (response, error) =>
                         {
                             if (error != null)
@@ -145,8 +174,9 @@ namespace TruVideoiOSTestApp
                         };
                         TruvideoMediaSdk.Shared.UploadWithPath(selectedMedia[0], UploadMediaHandler);
                     }
-                    else {
-					    textView.Text += "No selected media from camera";
+                    else
+                    {
+                        textView.Text += "No selected media from camera";
                     }
                     break;
             }

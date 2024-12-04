@@ -40,5 +40,9 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone use reason</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera Usage Reason</string>
 </dict>
 </plist>
