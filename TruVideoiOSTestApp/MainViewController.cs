@@ -136,7 +136,7 @@ namespace TruVideoiOSTestApp
                 case 2:
                     if (selectedMedia.Count > 0)
                     {
-                        NSUrl url = NSUrl.FromString(selectedMedia[0]);
+                        NSUrl url = NSUrl.FromFilename(selectedMedia[0]);
                         ThumbnailRequest request = new ThumbnailRequest(url, 0.5, null, null);
                         Action<NSUrl, NSError> ThumbnailHandler = (response, error) =>
                         {
